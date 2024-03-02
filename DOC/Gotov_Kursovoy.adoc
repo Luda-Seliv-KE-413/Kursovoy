@@ -1,0 +1,10 @@
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:toc-title: Оглавление
+include::Titul.adoc[]
+
+toc::[]
+
+include::Analiz_Trebovaniy.adoc[]
