@@ -2,7 +2,9 @@
 :icons: font
 :figure-caption: Рисунок
 :table-caption: Таблица
+:stem: Формула
 :toc-title: Оглавление
+
 include::Titul.adoc[]
 
 toc::[]
