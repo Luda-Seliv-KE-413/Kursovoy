@@ -12,7 +12,7 @@ include::Vvedenie.adoc[]
 
 include::Analiz_Trebovaniy.adoc[]
 
-//include::Analiz_Trebovaniy.adoc[]
+include::Arhitecture.adoc[]
 
 //include::Analiz_Trebovaniy.adoc[]
 
