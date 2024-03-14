@@ -1,0 +1,14 @@
+:imagesdir: images
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:stem: Формула
+
+
+== Дизайн
+
+=== Настройка (чего-то)
+
+
+=== Архитектура
