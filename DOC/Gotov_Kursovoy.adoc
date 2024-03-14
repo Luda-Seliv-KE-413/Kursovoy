@@ -6,6 +6,8 @@ include::Titul.adoc[]
 
 toc::[]
 
+include::Zadanie na rabotu.adoc[]
+
 include::Vvedenie.adoc[]
 
 include::Analiz_Trebovaniy.adoc[]
