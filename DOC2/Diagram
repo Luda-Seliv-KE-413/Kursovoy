@@ -1,0 +1,37 @@
+@startuml
+
+class main
+{
+    note: основная функця программы
+    +{abstrac} void calculate()
+}
+
+ note right: функция calculate() производит пересчет температуры в глкемию
+
+class TIMER2
+{
+    note: реализует измерения сопределенным периодом времени (здесь 5 минут)
+}
+
+class DTemp
+{
+    +{abstrac} void Test()
+    note: класс отвечающий за считываие данных с резонатора
+}
+
+class Bluetooth
+{
+     note: класс передающий информацию по запросу внешнего устройства-приемника
+}
+
+interface IUSSART2
+{
+
+}
+
+TIMER2 --|> main
+DTemp --|> TIMER2
+IUSSART2 --|> Bluetooth
+main --|> IUSSART2
+
+@enduml
