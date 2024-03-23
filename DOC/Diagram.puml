@@ -1,68 +1,29 @@
-@startuml
+@startuml name 
 
-interface ITemperature
+interface IThread
+interface IMeasureTemperatureTask
 {
-    преобразует частоту в температуру
+    +{abstract} void Temperature()
 }
-
 class Frequency
+interface IMeasureFrequency
 {
-    сохраняет считанную частоту с датчика
+    (Уточнить какм способом будешь 
+    измерять частоту через таймер)
 }
 
-interface IFrequency
-{
-    считывает частоту с датчика
-}
+IThread .. IMeasureTemperatureTask
+Frequency -up-|> IMeasureTemperatureTask
+IMeasureFrequency -up-o Frequency
 
-class Timer2
-{
-    
-}
-
-interface ITimer
-{
-    Обновляет данные и "проводит" измерения 
-    через определенным интервалом или по 
-    команде
-    + {abstract} void Update()
-}
-
+interface BluetoothGlycemiaTask
 class Bluetooth
-{
-    передает данные  
-}
-
-interface IUSSART2
-{
-    Отвечает за передачу данных
-}
-
-interface IFrequencyTemperatureGlycemia
-{
-    преобразует температуру в показатели гликемии
-}
-
-class Temperature
-{
-    сохраняет полученные значения температцры
-}
-
+class USART2
 class Glycemia
-{
-    сохраняет полученные значения гликемии
-}
+interface ICalculateGlycemia
 
-IFrequencyTemperatureGlycemia -down- Temperature
-Temperature -down- ITemperature
-Frequency -left- IFrequency
-ITemperature -down-Frequency
-IUSSART2 --Bluetooth
-Glycemia -down-IFrequencyTemperatureGlycemia
-Glycemia -left- IUSSART2
-ITimer-- Timer2
-ITimer --IUSSART2
-Timer2 -right-IUSSART2
-Timer2 --IFrequency
+IThread .. BluetoothGlycemiaTask
+
+class Request
 
 @enduml
