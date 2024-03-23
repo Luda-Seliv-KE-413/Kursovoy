@@ -1,37 +1,68 @@
 @startuml
 
-class main
+interface ITemperature
 {
-    note: основная функця программы
-    +{abstrac} void calculate()
+    преобразует частоту в температуру
 }
 
- note right: функция calculate() производит пересчет температуры в глкемию
-
-class TIMER2
+class Frequency
 {
-    note: реализует измерения сопределенным периодом времени (здесь 5 минут)
+    сохраняет считанную частоту с датчика
 }
 
-class DTemp
+interface IFrequency
 {
-    +{abstrac} void Test()
-    note: класс отвечающий за считываие данных с резонатора
+    считывает частоту с датчика
+}
+
+class Timer2
+{
+    
+}
+
+interface ITimer
+{
+    Обновляет данные и "проводит" измерения 
+    через определенным интервалом или по 
+    команде
+    + {abstract} void Update()
 }
 
 class Bluetooth
 {
-     note: класс передающий информацию по запросу внешнего устройства-приемника
+    передает данные  
 }
 
 interface IUSSART2
 {
-
+    Отвечает за передачу данных
 }
 
-TIMER2 --|> main
-DTemp --|> TIMER2
-IUSSART2 --|> Bluetooth
-main --|> IUSSART2
+interface IFrequencyTemperatureGlycemia
+{
+    преобразует температуру в показатели гликемии
+}
+
+class Temperature
+{
+    сохраняет полученные значения температцры
+}
+
+class Glycemia
+{
+    сохраняет полученные значения гликемии
+}
+
+IFrequencyTemperatureGlycemia -down- Temperature
+Temperature -down- ITemperature
+Frequency -left- IFrequency
+ITemperature -down-Frequency
+IUSSART2 --Bluetooth
+Glycemia -down-IFrequencyTemperatureGlycemia
+Glycemia -left- IUSSART2
+ITimer-- Timer2
+ITimer --IUSSART2
+Timer2 -right-IUSSART2
+Timer2 --IFrequency
 
 @enduml
