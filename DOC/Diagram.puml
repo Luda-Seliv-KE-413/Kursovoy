@@ -1,31 +1,39 @@
 @startuml name 
 
 interface IThread
-interface IMeasureTemperatureTask
-{
-    +{abstract} void Temperature()
-}
-class Frequency
+class MeasureGlycemiaTask
+class Glycemia
+interface MeasureTemperatureTask
+class Temperature
 interface IMeasureFrequency
 {
     (Метод 2х таймеров (описать 
     + возможно, перерисовать окружение))
 }
+class Frequency
 
-IThread .. IMeasureTemperatureTask
-Frequency -up-|> IMeasureTemperatureTask
-IMeasureFrequency -up-o Frequency
+IThread <|-- MeasureGlycemiaTask
+Glycemia -up-|> MeasureGlycemiaTask
+MeasureTemperatureTask -up-o Glycemia
+Temperature -up-|> MeasureTemperatureTask
+Frequency -up-|> IMeasureFrequency
+IMeasureFrequency -up-o Temperature
 
-interface ITemperatureGlycemiaTask
-class Glycemia
-interface BluetoothGlycemiaTask
+
+class BluetoothGlycemiaTask
 interface USART2
-class Bluetooth
+class Transmitor
+class InformationGlycemia
 
-IThread .. BluetoothGlycemiaTask
-Bluetooth -up-|> BluetoothGlycemiaTask
-ITemperatureGlycemiaTask -up-o Glycemia
-USART2 -up-o Bluetooth
-Glycemia -up-|> USART2
+IThread <|-- BluetoothGlycemiaTask
+Transmitor -up-|> BluetoothGlycemiaTask
+USART2 -up-o Transmitor
+InformationGlycemia -up-|> USART2
+InformationGlycemia o.up. Glycemia
+
+
+
+
+
 
 @enduml
