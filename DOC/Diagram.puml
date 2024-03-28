@@ -8,22 +8,24 @@ interface IMeasureTemperatureTask
 class Frequency
 interface IMeasureFrequency
 {
-    (Уточнить какм способом будешь 
-    измерять частоту через таймер)
+    (Метод 2х таймеров (описать 
+    + возможно, перерисовать окружение))
 }
 
 IThread .. IMeasureTemperatureTask
 Frequency -up-|> IMeasureTemperatureTask
 IMeasureFrequency -up-o Frequency
 
-interface BluetoothGlycemiaTask
-class Bluetooth
-class USART2
+interface ITemperatureGlycemiaTask
 class Glycemia
-interface ICalculateGlycemia
+interface BluetoothGlycemiaTask
+interface USART2
+class Bluetooth
 
 IThread .. BluetoothGlycemiaTask
-
-class Request
+Bluetooth -up-|> BluetoothGlycemiaTask
+ITemperatureGlycemiaTask -up-o Glycemia
+USART2 -up-o Bluetooth
+Glycemia -up-|> USART2
 
 @enduml
