@@ -3,7 +3,7 @@
 interface IThread
 class MeasureGlycemiaTask
 class Glycemia
-interface MeasureTemperatureTask
+interface IMeasureTemperature
 class Temperature
 interface IMeasureFrequency
 {
@@ -13,27 +13,47 @@ interface IMeasureFrequency
 class Frequency
 
 IThread <|-- MeasureGlycemiaTask
-Glycemia -up-|> MeasureGlycemiaTask
-MeasureTemperatureTask -up-o Glycemia
-Temperature -up-|> MeasureTemperatureTask
-Frequency -up-|> IMeasureFrequency
-IMeasureFrequency -up-o Temperature
+
+/** правильно 3 строчки
+Glycemia -up-o MeasureGlycemiaTask
+IMeasureTemperature -up-o Glycemia
+Temperature -up-|> IMeasureTemperature
+/**
+
+Frequency -up-o IMeasureFrequency
+IMeasureFrequency -up-|> Temperature
 
 
 class BluetoothGlycemiaTask
-interface USART2
+class USART2
 class Transmitor
+interface IDataGlycemia
+{
+    ?
+}
 class InformationGlycemia
+{
+    Преобразует значение 
+    гликемии в строку
+}
+interface IBluetooth
+interface IUSART
+interface IDataProvider
+{
+    Забирает значение гликемии
+    float и передает информацию
+    для дальнейшего преобразования
+    ее в строку
+}
 
 IThread <|-- BluetoothGlycemiaTask
-Transmitor -up-|> BluetoothGlycemiaTask
-USART2 -up-o Transmitor
-InformationGlycemia -up-|> USART2
-InformationGlycemia o.up. Glycemia
+BluetoothGlycemiaTask <|-- IBluetooth
+Transmitor -up-o IBluetooth
+IUSART -up-|> Transmitor
+USART2 -up-o IUSART
+InformationGlycemia -up-o IBluetooth
 
-
-
-
-
+InformationGlycemia <|.up.IDataProvider
+ Glycemia --o IDataProvider
 
 @enduml
