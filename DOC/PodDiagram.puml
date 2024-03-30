@@ -1,8 +1,37 @@
 @startuml name 
 
 interface IMeasureFrequency
-interface ITimer
+class Frequency
+{
+    Преобразует полученные
+    значения в частоту
+}
+interface ITimers
+{
+    Общая схема:
+    Тайер 5. Запускк
+    Таймер 2.  Счет
+    Таймер 5. Остановка
+}
 class Timer2
+{
+    считает кол-во импульсов
+    пришедших на него за
+    время установленное
+    таймером 5
+}
 class Timer5
+{
+    + void {abstract} time
+    Каждые (время) запускает
+    таймер 2 (с частотой 
+    32-45 кГц)
+}
+
+ITimers -up-o Frequency
+Timer2 -up-|> ITimers
+Timer5 -up-|> ITimers
+Frequency -up-|> IMeasureFrequency
+
 
 @enduml

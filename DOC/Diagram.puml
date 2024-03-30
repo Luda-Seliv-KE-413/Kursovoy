@@ -7,8 +7,7 @@ interface IMeasureTemperature
 class Temperature
 interface IMeasureFrequency
 {
-    (Метод 2х таймеров (описать 
-    + возможно, перерисовать окружение))
+    Метод 2х таймеров
 }
 class Frequency
 
@@ -36,6 +35,12 @@ class InformationGlycemia
 }
 interface IBluetooth
 interface IUSART
+interface IConverter
+{
+    Конвертирует информацию 
+    о глиемии и передает для 
+    передачи по Bluetooth
+}
 interface IDataProvider
 {
     Забирает значение гликемии
@@ -45,11 +50,13 @@ interface IDataProvider
 }
 
 IThread <|-- BluetoothGlycemiaTask
-BluetoothGlycemiaTask <|-- IBluetooth
+BluetoothGlycemiaTask o-- IBluetooth
 Transmitor -up-|> IBluetooth
 IUSART -up-o Transmitor
 USART2 -up-|> IUSART
-InformationGlycemia -up-|> IBluetooth
+InformationGlycemia -up-|> IConverter
+IConverter -up-o BluetoothGlycemiaTask
+
 
 InformationGlycemia o.up.IDataProvider
 Glycemia --|> IDataProvider
