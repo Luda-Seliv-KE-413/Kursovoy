@@ -12,16 +12,13 @@ interface IMeasureFrequency
 }
 class Frequency
 
-IThread <|-- MeasureGlycemiaTask
-
-/** правильно 3 строчки
-Glycemia -up-o MeasureGlycemiaTask
+IThread <|-down- MeasureGlycemiaTask
+IDataGlycemia -up-o MeasureGlycemiaTask
+IDataGlycemia <|-up- Glycemia
 IMeasureTemperature -up-o Glycemia
 Temperature -up-|> IMeasureTemperature
-/**
-
-Frequency -up-o IMeasureFrequency
-IMeasureFrequency -up-|> Temperature
+Frequency -up-|> IMeasureFrequency
+IMeasureFrequency -up-o Temperature
 
 
 class BluetoothGlycemiaTask
@@ -29,7 +26,8 @@ class USART2
 class Transmitor
 interface IDataGlycemia
 {
-    ?
+    ? (передает информацию
+    об уровне гликемии)
 }
 class InformationGlycemia
 {
@@ -48,12 +46,12 @@ interface IDataProvider
 
 IThread <|-- BluetoothGlycemiaTask
 BluetoothGlycemiaTask <|-- IBluetooth
-Transmitor -up-o IBluetooth
-IUSART -up-|> Transmitor
-USART2 -up-o IUSART
-InformationGlycemia -up-o IBluetooth
+Transmitor -up-|> IBluetooth
+IUSART -up-o Transmitor
+USART2 -up-|> IUSART
+InformationGlycemia -up-|> IBluetooth
 
-InformationGlycemia <|.up.IDataProvider
- Glycemia --o IDataProvider
+InformationGlycemia o.up.IDataProvider
+Glycemia --|> IDataProvider
 
 @enduml

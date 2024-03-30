@@ -1,0 +1,8 @@
+@startuml name 
+
+interface IMeasureFrequency
+interface ITimer
+class Timer2
+class Timer5
+
+@enduml
