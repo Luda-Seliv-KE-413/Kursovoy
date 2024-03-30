@@ -2,6 +2,10 @@
 
 interface IThread
 class MeasureGlycemiaTask
+{
+    Реализует измерение
+    гликемии
+}
 class Glycemia
 {
     Преобразует полученные
@@ -18,6 +22,11 @@ class Temperature
     Преобразует частоту
     в температуру
 }
+class MeasureFrequencyTask
+{
+    Реализует измерение
+    частоты
+}
 interface IMeasureFrequency
 {
     Обеспечивает измерение
@@ -32,10 +41,14 @@ IDataGlycemia <|-up- Glycemia
 IMeasureTemperature -up-o Glycemia
 Temperature -up-|> IMeasureTemperature
 Frequency -up-|> IMeasureFrequency
-IMeasureFrequency -up-o Temperature
-
+MeasureFrequencyTask -up-|> IThread
+IMeasureFrequency -up-o MeasureFrequencyTask
 
 class BluetoothGlycemiaTask
+{
+    Реализует передачу
+    информации
+}
 class USART2
 {
     Преобразует нформацию

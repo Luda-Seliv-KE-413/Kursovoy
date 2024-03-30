@@ -1,6 +1,10 @@
-@startuml name1 
+@startuml Frequency 
 
 interface IMeasureFrequency
+{
+    Обеспечивает передачу 
+    информации о частоте 
+}
 class Frequency
 {
     Преобразует полученные
@@ -10,34 +14,23 @@ interface ITimers
 {
     Обеспечивает считывание
     информации полученной
-    таймерами
-}
-class Timer2
-{
-    считает кол-во импульсов
-    пришедших на него за
-    время установленное
-    таймером 5
-}
-interface IUpdate
-{
-    Обеспечивает передачу
-    сигнала для начала 
-    измерений
+    таймером
 }
 class Timer5
 {
-    + void {abstract} time
-    Каждые (время) запускает
-    таймер 2 (с частотой 
-    32-45 кГц)
+    Считает кол-во импульсов
+    пришедших на него за период 
+    переполнения таймера 2
+}
+class Temperature
+{
+    Преобразует частоту
+    в температуру
 }
 
 ITimers -up-o Frequency
-Timer2 -up-|> ITimers
 Timer5 -up-|> ITimers
 Frequency -up-|> IMeasureFrequency
-Timer2 o-right- IUpdate
-IUpdate <|-right- Timer5
+IMeasureFrequency -up-o Temperature
 
 @enduml
