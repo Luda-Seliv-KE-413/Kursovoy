@@ -1,4 +1,4 @@
-@startuml name 
+@startuml name1 
 
 interface IMeasureFrequency
 class Frequency
@@ -8,10 +8,9 @@ class Frequency
 }
 interface ITimers
 {
-    Общая схема:
-    Тайер 5. Запускк
-    Таймер 2.  Счет
-    Таймер 5. Остановка
+    Обеспечивает считывание
+    информации полученной
+    таймерами
 }
 class Timer2
 {
@@ -19,6 +18,12 @@ class Timer2
     пришедших на него за
     время установленное
     таймером 5
+}
+interface IUpdate
+{
+    Обеспечивает передачу
+    сигнала для начала 
+    измерений
 }
 class Timer5
 {
@@ -32,6 +37,7 @@ ITimers -up-o Frequency
 Timer2 -up-|> ITimers
 Timer5 -up-|> ITimers
 Frequency -up-|> IMeasureFrequency
-
+Timer2 o-right- IUpdate
+IUpdate <|-right- Timer5
 
 @enduml

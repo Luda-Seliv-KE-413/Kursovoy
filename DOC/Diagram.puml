@@ -1,13 +1,28 @@
-@startuml name 
+@startuml main 
 
 interface IThread
 class MeasureGlycemiaTask
 class Glycemia
+{
+    Преобразует полученные
+    значения температуры в
+    значения гликемии
+}
 interface IMeasureTemperature
+{
+    Обеспечивает передачу
+    информации о температуре
+}
 class Temperature
+{
+    Преобразует частоту
+    в температуру
+}
 interface IMeasureFrequency
 {
-    Метод 2х таймеров
+    Обеспечивает измерение
+    частоты с помощью 2х таймеров
+    (PodDiagram)
 }
 class Frequency
 
@@ -22,11 +37,19 @@ IMeasureFrequency -up-o Temperature
 
 class BluetoothGlycemiaTask
 class USART2
+{
+    Преобразует нформацию
+    для передачи данных
+}
 class Transmitor
+{
+    Отправляет запрошенную
+    информацию
+}
 interface IDataGlycemia
 {
-    ? (передает информацию
-    об уровне гликемии)
+    Обеспечивает передачу
+    информации о гликемии
 }
 class InformationGlycemia
 {
@@ -34,7 +57,17 @@ class InformationGlycemia
     гликемии в строку
 }
 interface IBluetooth
+{
+    Обеспчечивает передачу 
+    информации по беспроводному
+    интерфейсу
+}
 interface IUSART
+{
+    Обеспечивает преобразование 
+    нформации для передачи 
+    данных
+}
 interface IConverter
 {
     Конвертирует информацию 
@@ -43,10 +76,9 @@ interface IConverter
 }
 interface IDataProvider
 {
-    Забирает значение гликемии
-    float и передает информацию
-    для дальнейшего преобразования
-    ее в строку
+    Обеспечивает передачу 
+    информации для дальнейшего 
+    преобразования в строку
 }
 
 IThread <|-- BluetoothGlycemiaTask
