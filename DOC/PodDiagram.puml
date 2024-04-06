@@ -1,0 +1,36 @@
+@startuml Frequency 
+
+interface IMeasureFrequency
+{
+    Обеспечивает передачу 
+    информации о частоте 
+}
+class Frequency
+{
+    Преобразует полученные
+    значения в частоту
+}
+interface ITimers
+{
+    Обеспечивает считывание
+    информации полученной
+    таймером
+}
+class Timer2
+{
+    Считает кол-во импульсов
+    пришедших на него за период 
+    установленный RTC
+}
+class Temperature
+{
+    Преобразует частоту
+    в температуру
+}
+
+ITimers -up-o Frequency
+Timer2 -up-|> ITimers
+Frequency -up-|> IMeasureFrequency
+IMeasureFrequency -up-o Temperature
+
+@enduml

@@ -1,0 +1,109 @@
+@startuml main 
+
+interface IThread
+class MeasureGlycemiaTask
+{
+    Реализует измерение
+    гликемии
+}
+class Glycemia
+{
+    Преобразует полученные
+    значения температуры в
+    значения гликемии
+}
+interface IMeasureTemperature
+{
+    Обеспечивает передачу
+    информации о температуре
+}
+class Temperature
+{
+    Преобразует частоту
+    в температуру
+}
+class MeasureFrequencyTask
+{
+    Реализует измерение
+    частоты
+}
+interface IMeasureFrequency
+{
+    Обеспечивает измерение
+    частоты с помощью 2х таймеров
+    (PodDiagram)
+}
+class Frequency
+
+IThread <|-down- MeasureGlycemiaTask
+IDataGlycemia -up-o MeasureGlycemiaTask
+IDataGlycemia <|-up- Glycemia
+IMeasureTemperature -up-o Glycemia
+Temperature -up-|> IMeasureTemperature
+Frequency -up-|> IMeasureFrequency
+MeasureFrequencyTask -up-|> IThread
+IMeasureFrequency -up-o MeasureFrequencyTask
+
+class BluetoothGlycemiaTask
+{
+    Реализует передачу
+    информации
+}
+class USART2
+{
+    Преобразует нформацию
+    для передачи данных
+}
+class Transmitor
+{
+    Отправляет запрошенную
+    информацию
+}
+interface IDataGlycemia
+{
+    Обеспечивает передачу
+    информации о гликемии
+}
+class InformationGlycemia
+{
+    Преобразует значение 
+    гликемии в строку
+}
+interface IBluetooth
+{
+    Обеспчечивает передачу 
+    информации по беспроводному
+    интерфейсу
+}
+interface IUSART
+{
+    Обеспечивает преобразование 
+    нформации для передачи 
+    данных
+}
+interface IConverter
+{
+    Конвертирует информацию 
+    о глиемии и передает для 
+    передачи по Bluetooth
+}
+interface IDataProvider
+{
+    Обеспечивает передачу 
+    информации для дальнейшего 
+    преобразования в строку
+}
+
+IThread <|-- BluetoothGlycemiaTask
+BluetoothGlycemiaTask o-- IBluetooth
+Transmitor -up-|> IBluetooth
+IUSART -up-o Transmitor
+USART2 -up-|> IUSART
+InformationGlycemia -up-|> IConverter
+IConverter -up-o BluetoothGlycemiaTask
+
+
+InformationGlycemia o.up.IDataProvider
+Glycemia --|> IDataProvider
+
+@enduml
