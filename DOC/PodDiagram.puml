@@ -16,11 +16,11 @@ interface ITimers
     информации полученной
     таймером
 }
-class Timer5
+class Timer2
 {
     Считает кол-во импульсов
     пришедших на него за период 
-    переполнения таймера 2
+    установленный RTC
 }
 class Temperature
 {
@@ -29,7 +29,7 @@ class Temperature
 }
 
 ITimers -up-o Frequency
-Timer5 -up-|> ITimers
+Timer2 -up-|> ITimers
 Frequency -up-|> IMeasureFrequency
 IMeasureFrequency -up-o Temperature
 
