@@ -5,6 +5,7 @@ class MeasureGlycemiaTask
 {
     Реализует измерение
     гликемии
+    + run ()
 }
 class Glycemia
 {
@@ -63,6 +64,7 @@ interface IDataGlycemia
 {
     Обеспечивает передачу
     информации о гликемии
+    + {abstract} calculate
 }
 class InformationGlycemia
 {
