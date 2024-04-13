@@ -42,7 +42,6 @@ ICalculate -up-o MeasureGlycemiaTask
 ICalculate <|-- Glycemia
 ICalculate --o Glycemia
 Temperature -up-|> ICalculate
-Frequency -up-|> ICalculate
 ICalculate --o Temperature
 
 class BluetoothGlycemiaTask
@@ -68,8 +67,8 @@ class Transmitor
 }
 interface ICalculate
 {
-    Обеспечивает передачу
-    информации о гликемии
+    Обеспечивает перерасчет
+    значений
 
     + void Calculate () = 0
 }
@@ -137,7 +136,7 @@ class Timer2
     + void count ()
 }
 
-ITimer -up-o Frequency
+ITimer -up-o Temperature
 Timer2 -up-|> ITimer
 
 @enduml
