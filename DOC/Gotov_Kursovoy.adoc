@@ -14,6 +14,17 @@ include::Analiz_Trebovaniy.adoc[]
 
 include::Design.adoc[]
 
-//include::Analiz_Trebovaniy.adoc[]
+== Коды интерфейса
+
+По архитектуре представленной в предыдущем разделе были написаны коды программнго обеспечения устройства.
+
+include::CodeProgramFrequency.adoc[]
+
+include::CodeProgramTemperature.adoc[]
+
+include::CodeProgramGlycemia.adoc[]
+
+include::CodeProgramBluetooth.adoc[]
+
 
 //include::Analiz_Trebovaniy.adoc[]
