@@ -50,7 +50,7 @@ class BluetoothGlycemiaTask
     Реализует передачу
     информации
 
-     + {abstract} BluetoothGlycemia ()
+     + void Execute ()
 }
 class USART2
 {
@@ -79,7 +79,7 @@ class InformationGlycemia
     Преобразует значение 
     гликемии в строку
     
-    + {abstract} DataLine
+    + {abstract} DataLine ()
 }
 interface IBluetooth
 {
