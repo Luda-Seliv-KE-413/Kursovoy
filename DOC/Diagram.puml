@@ -17,46 +17,33 @@ class Glycemia
     значения температуры в
     значения гликемии
 
-     + double CalculateGlycemia ()
+     + void Calculate ()
 }
-interface IMeasureTemperature
-{
-    Обеспечивает передачу
-    информации о температуре
-}
+
 class Temperature
 {
     Преобразует частоту
     в температуру
 
-     + {abstract} CalculateTemperature ()
+     + void Calculate ()
 }
-class MeasureFrequencyTask
-{
-    Реализует измерение
-    частоты
 
-    + {abstract} Frequency ()
-}
-interface IMeasureFrequency
-{
-    Обеспечивает измерение
-    частоты
-    (PodDiagram)
-}
 class Frequency
 {
-     + {abstract} CalculateFrequency ()
+     возможно удалить и 
+     таймеры подсоединить
+     сразу к температуре
+     
+     + void Calculate ()
 }
 
 IThread <|-down- MeasureGlycemiaTask
-IDataGlycemia -up-o MeasureGlycemiaTask
-IDataGlycemia <|-up- Glycemia
-IMeasureTemperature -up-o Glycemia
-Temperature -up-|> IMeasureTemperature
-Frequency -up-|> IMeasureFrequency
-MeasureFrequencyTask -up-|> IThread
-IMeasureFrequency -up-o MeasureFrequencyTask
+ICalculate -up-o MeasureGlycemiaTask
+ICalculate <|-- Glycemia
+ICalculate --o Glycemia
+Temperature -up-|> ICalculate
+Frequency -up-|> ICalculate
+ICalculate --o Temperature
 
 class BluetoothGlycemiaTask
 {
@@ -70,22 +57,23 @@ class USART2
     Преобразует нформацию
     для передачи данных
     
-    + {abstract} DataLineUsart
+    + {abstract} DataLineUsart ()
 }
 class Transmitor
 {
     Отправляет запрошенную
     информацию
     
-    + {abstract} DataTransmitor
+    + {abstract} DataTransmitor ()
 }
-interface IDataGlycemia
+interface ICalculate
 {
     Обеспечивает передачу
     информации о гликемии
 
     + void Calculate () = 0
 }
+
 class InformationGlycemia
 {
     Преобразует значение 
@@ -129,5 +117,27 @@ IConverter -up-o BluetoothGlycemiaTask
 
 InformationGlycemia o.up.IDataProvider
 Glycemia --|> IDataProvider
+
+
+
+interface ITimer
+{
+    Обеспечивает считывание
+    информации полученной
+    таймером
+
+    + void count () = 0
+}
+class Timer2
+{
+    Считает кол-во импульсов
+    пришедших на него за период 
+    установленный RTC
+
+    + void count ()
+}
+
+ITimer -up-o Frequency
+Timer2 -up-|> ITimer
 
 @enduml
