@@ -67,14 +67,14 @@ class USART2
     Преобразует нформацию
     для передачи данных
     
-    + {abstrsct} DataLineUsart
+    + {abstract} DataLineUsart
 }
 class Transmitor
 {
     Отправляет запрошенную
     информацию
     
-    + {abstrsct} DataTransmitor
+    + {abstract} DataTransmitor
 }
 interface IDataGlycemia
 {
@@ -86,7 +86,7 @@ class InformationGlycemia
     Преобразует значение 
     гликемии в строку
     
-    + {abstrsct} DataLine
+    + {abstract} DataLine
 }
 interface IBluetooth
 {
