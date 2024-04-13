@@ -6,7 +6,7 @@ class MeasureGlycemiaTask
     Реализует измерение
     гликемии
 
-    + {abstract} Glycemia ()
+    + {abstract} GlycemiaUpdate ()
 }
 class Glycemia
 {
