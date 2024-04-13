@@ -43,6 +43,7 @@ ICalculate <|-- Glycemia
 ICalculate --o Glycemia
 Temperature -up-|> ICalculate
 ICalculate --o Temperature
+Frequency -up-|> ICalculate
 
 class BluetoothGlycemiaTask
 {
@@ -136,7 +137,7 @@ class Timer2
     + void count ()
 }
 
-ITimer -up-o Temperature
+ITimer -up-o Frequency
 Timer2 -up-|> ITimer
 
 @enduml
