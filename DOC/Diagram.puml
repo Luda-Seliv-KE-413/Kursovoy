@@ -1,12 +1,15 @@
 @startuml main 
 
 interface IThread
+{
+    + void Execute () = 0
+}
 class MeasureGlycemiaTask
 {
     Реализует измерение
     гликемии
 
-    + {abstract} GlycemiaUpdate ()
+    + void Execute ()
 }
 class Glycemia
 {
@@ -14,7 +17,7 @@ class Glycemia
     значения температуры в
     значения гликемии
 
-     + {abstract} CalculateGlycemia ()
+     + double CalculateGlycemia ()
 }
 interface IMeasureTemperature
 {
@@ -80,6 +83,8 @@ interface IDataGlycemia
 {
     Обеспечивает передачу
     информации о гликемии
+
+    + void Calculate () = 0
 }
 class InformationGlycemia
 {

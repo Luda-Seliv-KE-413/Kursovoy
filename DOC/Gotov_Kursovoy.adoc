@@ -26,5 +26,4 @@ include::CodeProgramGlycemia.adoc[]
 
 include::CodeProgramBluetooth.adoc[]
 
-
-//include::Analiz_Trebovaniy.adoc[]
+include::Rezultat.adoc[]
