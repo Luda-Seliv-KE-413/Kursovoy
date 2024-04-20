@@ -140,4 +140,23 @@ class Timer2
 ITimer -up-o Frequency
 Timer2 -up-|> ITimer
 
+class BatteryTask
+{
+    Реализует передачу
+    информации о
+    состоянии заряда
+    батареи
+
+     + void Execute ()
+}
+class ADC
+{
+    Получает нформацию
+    о состоянии заряда батареи
+}
+
+IThread <|-- BatteryTask
+ICalculate -up-o BatteryTask
+ICalculate <|-- ADC
+
 @enduml
