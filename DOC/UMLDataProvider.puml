@@ -1,0 +1,67 @@
+@startuml DataProvider
+
+class Glycemia
+{
+Преобразует полученные
+значения температуры в
+значения гликемии
+
++ void Calculate ()
++ void Provid ()
+}
+
+class Temperature
+{
+Преобразует частоту
+в температуру
+
++ void Calculate ()
++ void Provid ()
+}
+
+class Frequency
+{
+Получает информацию
+о значениях частоты
+
++ void Calculate ()
++ void Provid ()
+}
+
+class BatteryVoltage
+{
+Преобразует код АЦП
+в значение заряда
+батареи
+
++ void Calculate ()
++ void Provid ()
+}
+
+class Information
+{
+Преобразует информацию
+в строку
+
++ {abstract} DataLine ()
+}
+
+interface IDataProvider
+{
+    Обеспечивает передачу 
+    информации для дальнейшего 
+    преобразования
+
+    + void Provid () = 0
+}
+
+BatteryVoltage -up-|> IDataProvider
+Frequency -up-|> IDataProvider
+Temperature -up-|> IDataProvider
+Glycemia -up-|> IDataProvider
+
+Glycemia o-- IDataProvider
+Temperature o-- IDataProvider
+Information o--IDataProvider
+
+@enduml

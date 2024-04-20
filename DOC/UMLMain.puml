@@ -20,6 +20,7 @@ class Glycemia
 значения гликемии
 
 + void Calculate ()
++ void Provid ()
 }
 
 class Temperature
@@ -28,6 +29,7 @@ class Temperature
 в температуру
 
 + void Calculate ()
++ void Provid ()
 }
 
 class Frequency
@@ -36,6 +38,7 @@ class Frequency
 о значениях частоты
 
 + void Calculate ()
++ void Provid ()
 }
 
 class BatteryTask
@@ -55,6 +58,7 @@ class BatteryVoltage
 батареи
 
 + void Calculate ()
++ void Provid ()
 }
 
 class BluetoothTask
@@ -92,6 +96,8 @@ interface IBluetooth
 Обеспчечивает передачу
 информации по беспроводному
 интерфейсу
+
++ {abstract} DataTransmitor () = 0
 }
 
 interface IConverter
