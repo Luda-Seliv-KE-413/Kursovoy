@@ -1,73 +1,85 @@
 @startuml main 
 
 interface IThread
+{
+    + void Execute () = 0
+}
 class MeasureGlycemiaTask
 {
     Реализует измерение
     гликемии
+
+    + void Execute ()
 }
 class Glycemia
 {
     Преобразует полученные
     значения температуры в
     значения гликемии
+
+     + void Calculate ()
 }
-interface IMeasureTemperature
-{
-    Обеспечивает передачу
-    информации о температуре
-}
+
 class Temperature
 {
     Преобразует частоту
     в температуру
+
+     + void Calculate ()
 }
-class MeasureFrequencyTask
-{
-    Реализует измерение
-    частоты
-}
-interface IMeasureFrequency
-{
-    Обеспечивает измерение
-    частоты с помощью 2х таймеров
-    (PodDiagram)
-}
+
 class Frequency
+{
+     возможно удалить и 
+     таймеры подсоединить
+     сразу к температуре
+     
+     + void Calculate ()
+}
 
 IThread <|-down- MeasureGlycemiaTask
-IDataGlycemia -up-o MeasureGlycemiaTask
-IDataGlycemia <|-up- Glycemia
-IMeasureTemperature -up-o Glycemia
-Temperature -up-|> IMeasureTemperature
-Frequency -up-|> IMeasureFrequency
-MeasureFrequencyTask -up-|> IThread
-IMeasureFrequency -up-o MeasureFrequencyTask
+ICalculate -up-o MeasureGlycemiaTask
+ICalculate <|-- Glycemia
+ICalculate --o Glycemia
+Temperature -up-|> ICalculate
+ICalculate --o Temperature
+Frequency -up-|> ICalculate
 
 class BluetoothGlycemiaTask
 {
     Реализует передачу
     информации
+
+     + void Execute ()
 }
 class USART2
 {
     Преобразует нформацию
     для передачи данных
+    
+    + {abstract} DataLineUsart ()
 }
 class Transmitor
 {
     Отправляет запрошенную
     информацию
+    
+    + {abstract} DataTransmitor ()
 }
-interface IDataGlycemia
+interface ICalculate
 {
-    Обеспечивает передачу
-    информации о гликемии
+    Обеспечивает перерасчет
+    значений
+
+    + void Calculate () = 0
 }
-class InformationGlycemia
+
+class Information
 {
-    Преобразует значение 
-    гликемии в строку
+    Преобразует информацию
+    в строку
+    
+    + {abstract} DataLine ()
 }
 interface IBluetooth
 {
@@ -84,8 +96,8 @@ interface IUSART
 interface IConverter
 {
     Конвертирует информацию 
-    о глиемии и передает для 
-    передачи по Bluetooth
+    и передает для передачи 
+    по Bluetooth
 }
 interface IDataProvider
 {
@@ -99,11 +111,56 @@ BluetoothGlycemiaTask o-- IBluetooth
 Transmitor -up-|> IBluetooth
 IUSART -up-o Transmitor
 USART2 -up-|> IUSART
-InformationGlycemia -up-|> IConverter
+Information -up-|> IConverter
 IConverter -up-o BluetoothGlycemiaTask
-
-
-InformationGlycemia o.up.IDataProvider
+Information o.up.IDataProvider
 Glycemia --|> IDataProvider
 
+
+
+interface ITimer
+{
+    Обеспечивает считывание
+    информации полученной
+    таймером
+
+    + void count () = 0
+}
+class Timer2
+{
+    Считает кол-во импульсов
+    пришедших на него за период 
+    установленный RTC
+
+    + void count ()
+}
+
+ITimer -up-o Frequency
+Timer2 -up-|> ITimer
+
+class BatteryTask
+{
+    Реализует передачу
+    информации о
+    состоянии заряда
+    батареи
+
+     + void Execute ()
+}
+class ADC
+{
+    Получает нформацию
+    о состоянии заряда батареи
+}
+
+IThread <|-- BatteryTask
+ICalculate -up-o BatteryTask
+ICalculate <|-- ADC
+
+
+BatteryTask --|> IDataProvider
+
 @enduml
+// необходимо добавить классы и интерфейсы
+// для передачи информации о состоянии
+//батареи по Bluetooth

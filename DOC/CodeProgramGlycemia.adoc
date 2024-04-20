@@ -1,0 +1,72 @@
+:imagesdir: images
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:stem: Формула
+
+
+=== Код программы для измерения гликемии (уровня глюкозы в крови)
+
+Для измерения гликемии необходимо получить информацию о частоте кварцевого резонатора, преобразовать частоту в температуру, а температуру уже в значения гликемии.
+
+Коды для получения значений гликемии (класс Glycemia.h)  из температуры (класс Temperature.h) представлены ниже:
+
+класс Glycemia.h
+[.source, cpp]
+----
+#ifndef GLYCEMIA
+#define GLYCEMIA
+
+#include "ICalculate.h" //for Calculate
+
+//template
+class Glycemia : public ICalculate //for Temperature converter Glycemia?
+{
+public:
+  void Calculate() const override
+  {
+    std::cout<<"5.6 Mol/L"<<std::endl;
+  }
+};
+
+#endif
+----
+
+класс Temperature.h
+[.source, cpp]
+----
+#ifndef TEMPERATURE
+#define TEMPERATURE
+
+#include "ICalculate.h" //for Calculate
+
+//template
+class Temperature : public ICalculate //for Frequency converter Temperature?
+{
+public:
+  void Calculate() const override
+  {
+    std::cout<<"35.7"<<std::endl;
+  }
+};
+
+#endif
+----
+
+Для преобразования (пересчета) значений температуры в значения гликемии используется интерфейс, код которого представлен ниже:
+
+интерфейс ICalculate
+[.source, cpp]
+----
+#ifndef ICALCULATE
+#define ICALCULATE
+
+class ICalculate
+{
+public:
+  virtual void Calculate() const=0;
+};
+
+#endif
+----

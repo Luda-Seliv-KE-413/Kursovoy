@@ -1,0 +1,123 @@
+@startuml main
+
+interface IThread
+{
+(общий поток информации)
+
++ void Execute () = 0
+}
+class MeasureGlycemiaTask
+{
+Реализует измерение
+гликемии
+
++ void Execute ()
+}
+class Glycemia
+{
+Преобразует полученные
+значения температуры в
+значения гликемии
+
++ void Calculate ()
+}
+
+class Temperature
+{
+Преобразует частоту
+в температуру
+
++ void Calculate ()
+}
+
+class Frequency
+{
+Получает информацию
+о значениях частоты
+
++ void Calculate ()
+}
+
+class BatteryTask
+{
+Реализует передачу
+информации о
+состоянии заряда
+батареи
+
++ void Execute ()
+}
+
+class BatteryVoltage
+{
+Преобразует код АЦП
+в значение заряда
+батареи
+
++ void Calculate ()
+}
+
+class BluetoothTask
+{
+Реализует передачу
+информации
+
++ void Execute ()
+}
+
+class Transmitor
+{
+Отправляет запрошенную
+информацию
+
++ {abstract} DataTransmitor ()
+}
+interface ICalculate
+{
+Обеспечивает перерасчет
+значений
+
++ void Calculate () = 0
+}
+
+class Information
+{
+Преобразует информацию
+в строку
+
++ void DataLine ()
+}
+interface IBluetooth
+{
+Обеспчечивает передачу
+информации по беспроводному
+интерфейсу
+}
+
+interface IConverter
+{
+Конвертирует информацию
+и передает для передачи
+по Bluetooth
+
++ void DataLine () = 0
+}
+
+BluetoothTask -up-|> IThread
+MeasureGlycemiaTask -up-|> IThread
+BatteryTask -up-|> IThread
+
+BluetoothTask o-- IBluetooth
+BluetoothTask o-- IConverter
+Transmitor -up-|> IBluetooth
+
+BatteryTask o-down- ICalculate
+MeasureGlycemiaTask o-down- ICalculate
+Glycemia -up-|> ICalculate
+Temperature -up-|> ICalculate
+Frequency -up-|> ICalculate
+BatteryVoltage -up-|> ICalculate
+
+Information -up-|> IConverter
+
+@enduml

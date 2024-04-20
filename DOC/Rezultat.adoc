@@ -1,0 +1,10 @@
+:imagesdir: images
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:stem: Формула
+
+== Результат работы программы
+
+== Заключение

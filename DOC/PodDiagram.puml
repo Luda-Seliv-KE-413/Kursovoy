@@ -8,9 +8,11 @@ interface IMeasureFrequency
 class Frequency
 {
     Преобразует полученные
-    значения в частоту
+    значения в частоту.
+
+     + {abstract} CalculateFrequency ()
 }
-interface ITimers
+interface ITimer
 {
     Обеспечивает считывание
     информации полученной
@@ -21,6 +23,8 @@ class Timer2
     Считает кол-во импульсов
     пришедших на него за период 
     установленный RTC
+
+    + {abstract} count ()
 }
 class Temperature
 {
@@ -28,8 +32,8 @@ class Temperature
     в температуру
 }
 
-ITimers -up-o Frequency
-Timer2 -up-|> ITimers
+ITimer -up-o Frequency
+Timer2 -up-|> ITimer
 Frequency -up-|> IMeasureFrequency
 IMeasureFrequency -up-o Temperature
 
