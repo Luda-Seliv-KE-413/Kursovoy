@@ -74,10 +74,10 @@ interface ICalculate
     + void Calculate () = 0
 }
 
-class InformationGlycemia
+class Information
 {
-    Преобразует значение 
-    гликемии в строку
+    Преобразует информацию
+    в строку
     
     + {abstract} DataLine ()
 }
@@ -96,8 +96,8 @@ interface IUSART
 interface IConverter
 {
     Конвертирует информацию 
-    о глиемии и передает для 
-    передачи по Bluetooth
+    и передает для передачи 
+    по Bluetooth
 }
 interface IDataProvider
 {
@@ -111,11 +111,9 @@ BluetoothGlycemiaTask o-- IBluetooth
 Transmitor -up-|> IBluetooth
 IUSART -up-o Transmitor
 USART2 -up-|> IUSART
-InformationGlycemia -up-|> IConverter
+Information -up-|> IConverter
 IConverter -up-o BluetoothGlycemiaTask
-
-
-InformationGlycemia o.up.IDataProvider
+Information o.up.IDataProvider
 Glycemia --|> IDataProvider
 
 
@@ -159,4 +157,10 @@ IThread <|-- BatteryTask
 ICalculate -up-o BatteryTask
 ICalculate <|-- ADC
 
+
+BatteryTask --|> IDataProvider
+
 @enduml
+// необходимо добавить классы и интерфейсы
+// для передачи информации о состоянии
+//батареи по Bluetooth
