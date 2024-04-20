@@ -1,0 +1,9 @@
+:imagesdir: images
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:stem: Формула
+
+
+=== Код программы для получения информации о состоянии заряда батареи

@@ -20,9 +20,9 @@ include::Design.adoc[]
 
 include::CodeProgramFrequency.adoc[]
 
-include::CodeProgramTemperature.adoc[]
-
 include::CodeProgramGlycemia.adoc[]
+
+include::CodeProgramBattery.adoc[]
 
 include::CodeProgramBluetooth.adoc[]
 
