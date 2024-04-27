@@ -118,7 +118,8 @@ BluetoothTask o-- IConverter
 Transmitor -up-|> IBluetooth
 
 BatteryTask o-down- ICalculate
-MeasureGlycemiaTask o-down- ICalculate
+
+MeasureGlycemiaTask "3" o-down- ICalculate
 Glycemia -up-|> ICalculate
 Temperature -up-|> ICalculate
 Frequency -up-|> ICalculate
