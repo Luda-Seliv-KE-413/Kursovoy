@@ -2,14 +2,14 @@
 #define TEMPERATURE
 
 #include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
 
-//template
 class Temperature : public ICalculate //for Frequency converter Temperature?
 {
 public:
   void Calculate() const override
   {
-    std::cout<<"35.7"<<std::endl;
+    std::cout << "35.6 Ñ" << std::endl;
   }
 };
 
