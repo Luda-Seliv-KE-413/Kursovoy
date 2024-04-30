@@ -9,18 +9,18 @@ class MeasureGlycemiaTask : public IThread
 public:
   
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
-    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //?????????
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //Агрегация
   {
     
   }
   void Execute() override
     {
-      for(;;) //???? ??????? ????????
+      for(;;) //Цикл расчета значений
       {
         mFrequency.Calculate();
         mTemperature.Calculate();
         mGlycemia.Calculate();
-        Sleep(30000ms); //?????? ????? 5 ?????
+        Sleep(30000ms); //Спящий режим 5 минут
       }
     }
   

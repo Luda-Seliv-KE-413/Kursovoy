@@ -1,0 +1,51 @@
+#include "rtos.hpp"         // for Rtos
+#include "rccregisters.hpp" // for RCC
+#include "usart2registers.hpp" // for USART2
+#include "gpioaregisters.hpp" // for GPIOA
+
+
+#include "MeasureGlycemiaTask.h" // for MeasureGlycemiaTask
+#include "BluetoothTask.h" // for BluetoothTask
+#include "BatteryTask.h" // for BatteryTask
+
+std::uint32_t SystemCoreClock = 16'000'000U;
+
+extern "C" {
+int __low_level_init(void)
+{
+  //Usart
+  RCC::APB1ENR::USART2EN::Enable::Set(); // тактирование
+  GPIOA::MODER::MODER2::Alternate::Set(); // конфигурация портов, альтернативная функция
+  GPIOA::MODER::MODER3::Alternate::Set(); // конфигурация портов, альтернативная функция
+  GPIOA::OTYPER::OT2::OutputPushPull::Set();
+  GPIOA::OTYPER::OT3::OutputPushPull::Set();
+  GPIOA::PUPDR::PUPDR2::PullUp::Set(); // подтяжка к 1  
+  GPIOA::PUPDR::PUPDR3::PullUp::Set(); // подтяжка к 1 
+  
+  GPIOA::AFRL::AFRL2::Af7::Set();
+  GPIOA::AFRL::AFRL3::Af7::Set();
+  
+  USART2::BRR::DIV_Mantissa::Set(104);
+  USART2::BRR::DIV_Fraction::Value2::Set();
+  USART2::CR2::STOP::Value0::Set();
+    
+  USART2::CR1::OVER8::OversamplingBy16::Set(); // Режим дискретизации? 1/16
+  USART2::CR1::M::Data8bits::Set();
+  
+  USART2::CR1::TE::Enable::Set();
+  USART2::CR1::UE::Enable::Set();
+  
+  return 1;
+}
+}
+
+MeasureGlycemiaTask measurementGlycemiaTask(Glycemia, Temperature, Frequency);
+
+int main()
+{  
+using namespace OsWrapper;
+  Rtos::CreateThread(measureGlycemiaTask, "measureGlycemiaTask");
+  Rtos::Start();
+  
+  return 0;
+}
