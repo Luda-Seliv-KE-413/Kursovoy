@@ -4,11 +4,12 @@
 :figure-caption: Рисунок
 :table-caption: Таблица
 :stem: Формула
+:sourcedir: CODE
 
 
 === Код программы для измерения гликемии (уровня глюкозы в крови)
 
-Для решения задачи измерения ггликемии был создан класс задачи MeasureGlycemiaTask код которого представлен ниже.
+Для решения задачи измерения гликемии был создан класс задачи MeasureGlycemiaTask код которого представлен ниже.
 
 класс MeasureGlycemiaTask.h
 [.source, cpp]
@@ -24,18 +25,18 @@ class MeasureGlycemiaTask : public IThread
 public:
   
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
-    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //Агрегация
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //?????????
   {
     
   }
   void Execute() override
     {
-      for(;;) //Цикл расчета значений
+      for(;;) //???? ??????? ????????
       {
         mFrequency.Calculate();
         mTemperature.Calculate();
         mGlycemia.Calculate();
-        Sleep(30000ms); //Спящий режим 5 минут
+        Sleep(30000ms); //?????? ????? 5 ?????
       }
     }
   
@@ -55,44 +56,13 @@ private:
 класс Glycemia.h
 [.source, cpp]
 ----
-#ifndef GLYCEMIA
-#define GLYCEMIA
-
-#include "ICalculate.h" //for Calculate
-#include <iostream> // for std::cout
-
-//template
-class Glycemia : public ICalculate //for Temperature converter Glycemia?
-{
-public:
-  void Calculate() const override
-  {
-    std::cout << "5.6 Mol/L" << std::endl; //Ïðåîáðàçîâàòü ôîðìóëû ïîä ðàñ÷åò èç òåìïåðàòóðû â ãëèêåìèè
-  }
-};
-
-#endif
+//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
 ----
 
 класс Temperature.h
 [.source, cpp]
 ----
-#ifndef TEMPERATURE
-#define TEMPERATURE
-
-#include "ICalculate.h" //for Calculate
-#include <iostream> // for std::cout
-
-class Temperature : public ICalculate //for Frequency converter Temperature?
-{
-public:
-  void Calculate() const override
-  {
-    std::cout << "35.6 Ñ" << std::endl;
-  }
-};
-
-#endif
+//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
 ----
 
 Для преобразования (пересчета) значений температуры в значения гликемии используется интерфейс, код которого представлен ниже:
@@ -100,16 +70,7 @@ public:
 интерфейс ICalculate
 [.source, cpp]
 ----
-#ifndef ICALCULATE
-#define ICALCULATE
-
-class ICalculate
-{
-public:
-  virtual void Calculate() const=0;
-};
-
-#endif
+//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
 ----
 
 

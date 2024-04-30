@@ -4,6 +4,7 @@
 :figure-caption: Рисунок
 :table-caption: Таблица
 :stem: Формула
+:sourcedir: CODE
 
 
 == Дизайн
@@ -46,16 +47,7 @@
 Полная настройка и др. представлено в коде main.cpp
 [.source, cpp]
 ----
-#ifndef ICALCULATE
-#define ICALCULATE
-
-class ICalculate
-{
-public:
-  virtual void Calculate() const=0;
-};
-
-#endif
+//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
 ----
 
 === Архитектура

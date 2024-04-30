@@ -3,6 +3,7 @@
 :figure-caption: Рисунок
 :table-caption: Таблица
 :stem: Формула
+:sourcedir: CODE
 
 == Введение
 
