@@ -25,18 +25,18 @@ class MeasureGlycemiaTask : public IThread
 public:
   
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
-    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //?????????
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) 
   {
     
   }
   void Execute() override
     {
-      for(;;) //???? ??????? ????????
+      for(;;) 
       {
         mFrequency.Calculate();
         mTemperature.Calculate();
         mGlycemia.Calculate();
-        Sleep(30000ms); //?????? ????? 5 ?????
+        Sleep(30000ms); 
       }
     }
   
@@ -56,13 +56,44 @@ private:
 класс Glycemia.h
 [.source, cpp]
 ----
-//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+#ifndef GLYCEMIA
+#define GLYCEMIA
+
+#include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
+
+//template
+class Glycemia : public ICalculate //for Temperature converter Glycemia?
+{
+public:
+  void Calculate() const override
+  {
+    std::cout << "5.6 Mol/L" << std::endl; 
+  }
+};
+
+#endif
 ----
 
 класс Temperature.h
 [.source, cpp]
 ----
-//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+#ifndef TEMPERATURE
+#define TEMPERATURE
+
+#include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
+
+class Temperature : public ICalculate //for Frequency converter Temperature?
+{
+public:
+  void Calculate() const override
+  {
+    std::cout << "35.6 �" << std::endl;
+  }
+};
+
+#endif
 ----
 
 Для преобразования (пересчета) значений температуры в значения гликемии используется интерфейс, код которого представлен ниже:
@@ -70,7 +101,16 @@ private:
 интерфейс ICalculate
 [.source, cpp]
 ----
-//include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+#ifndef ICALCULATE
+#define ICALCULATE
+
+class ICalculate
+{
+public:
+  virtual void Calculate() const=0;
+};
+
+#endif
 ----
 
 
