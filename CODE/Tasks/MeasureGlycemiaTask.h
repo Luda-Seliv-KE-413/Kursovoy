@@ -1,10 +1,11 @@
 #ifndef MEASUREGLYCEMIATASK
 #define MEASUREGLYCEMIATASK
 #include "thread.hpp" // for OsWrapper::Thread<>
+#include "ICalculate.h" //for Calculate
 
 #include <iostream> // for std::cout
 
-class MeasureGlycemiaTask : public IThread
+class MeasureGlycemiaTask : public OsWrapper::Thread<256>
 {
 public:
   

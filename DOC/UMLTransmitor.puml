@@ -35,7 +35,7 @@ class USART2
     Преобразует нформацию
     для передачи данных
     
-    + {abstract} DataLineUsart ()
+    + void DataLineUsart ()
 }
 
 interface IUSART
@@ -43,6 +43,8 @@ interface IUSART
     Обеспечивает преобразование 
     нформации для передачи 
     данных
+
+    + void DataLineUsart ()=0
 }
 
 

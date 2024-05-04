@@ -1,19 +1,22 @@
 #include "rtos.hpp"         // for Rtos
 #include "rccregisters.hpp" // for RCC
-#include "usart2registers.hpp" // for USART2
-#include "gpioaregisters.hpp" // for GPIOA
+//#include "usart2registers.hpp" // for USART2
+//#include "gpioaregisters.hpp" // for GPIOA
 
 
 #include "MeasureGlycemiaTask.h" // for MeasureGlycemiaTask
-#include "BluetoothTask.h" // for BluetoothTask
-#include "BatteryTask.h" // for BatteryTask
+#include "Temperature.h" // for Temperature
+#include "Glycemia.h" // for Glycemia
+#include "Frequency.h" // for Frequency
+//#include "BluetoothTask.h" // for BluetoothTask
+//#include "BatteryTask.h" // for BatteryTask
 
 std::uint32_t SystemCoreClock = 16'000'000U;
 
 extern "C" {
 int __low_level_init(void)
 {
-  //Usart
+  /*//Usart
   RCC::APB1ENR::USART2EN::Enable::Set(); // тактирование
   GPIOA::MODER::MODER2::Alternate::Set(); // конфигурация портов, альтернативная функция
   GPIOA::MODER::MODER3::Alternate::Set(); // конфигурация портов, альтернативная функция
@@ -33,18 +36,23 @@ int __low_level_init(void)
   USART2::CR1::M::Data8bits::Set();
   
   USART2::CR1::TE::Enable::Set();
-  USART2::CR1::UE::Enable::Set();
+  USART2::CR1::UE::Enable::Set();*/
   
   return 1;
 }
 }
 
-MeasureGlycemiaTask measurementGlycemiaTask(Glycemia, Temperature, Frequency);
+Temperature temp;
+Glycemia glyc;
+Frequency freq;
+
+MeasureGlycemiaTask measureGlycemiaTask (glyc, temp, freq);
 
 int main()
 {  
-using namespace OsWrapper;
+  using namespace OsWrapper;
   Rtos::CreateThread(measureGlycemiaTask, "measureGlycemiaTask");
+  
   Rtos::Start();
   
   return 0;
