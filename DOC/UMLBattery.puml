@@ -31,4 +31,25 @@ interface IDataProvider
 BatteryVoltage -up-|> IDataProvider
 Information o--IDataProvider
 
+class ADC
+{
+Считывает информацию
+получаемую АЦП от
+батареи
+
++ {abstract} Reading ()
+}
+
+interface IReader
+{
+    Обеспечивает
+    считывание значений
+    с АЦП
+
+    {abstract} Reading () = 0
+}
+
+ADC -up-|> IReader
+BatteryVoltage o--IReader
+
 @enduml
