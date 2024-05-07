@@ -4,9 +4,50 @@
 :figure-caption: Рисунок
 :table-caption: Таблица
 :stem: Формула
+:sourcedir: CODE
 
 
 === Код программы для измерения гликемии (уровня глюкозы в крови)
+
+Для решения задачи измерения гликемии был создан класс задачи MeasureGlycemiaTask код которого представлен ниже.
+
+класс MeasureGlycemiaTask.h
+[.source, cpp]
+----
+#ifndef MEASUREGLYCEMIATASK
+#define MEASUREGLYCEMIATASK
+#include "thread.hpp" // for OsWrapper::Thread<>
+
+#include <iostream> // for std::cout
+
+class MeasureGlycemiaTask : public IThread
+{
+public:
+  
+  MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) 
+  {
+    
+  }
+  void Execute() override
+    {
+      for(;;) 
+      {
+        mFrequency.Calculate();
+        mTemperature.Calculate();
+        mGlycemia.Calculate();
+        Sleep(30000ms); 
+      }
+    }
+  
+private:
+  ICalculate& mGlycemia;
+  ICalculate& mTemperature;
+  ICalculate& mFrequency;
+};
+
+#endif
+----
 
 Для измерения гликемии необходимо получить информацию о частоте кварцевого резонатора, преобразовать частоту в температуру, а температуру уже в значения гликемии.
 
@@ -19,6 +60,7 @@
 #define GLYCEMIA
 
 #include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
 
 //template
 class Glycemia : public ICalculate //for Temperature converter Glycemia?
@@ -26,7 +68,8 @@ class Glycemia : public ICalculate //for Temperature converter Glycemia?
 public:
   void Calculate() const override
   {
-    std::cout<<"5.6 Mol/L"<<std::endl;
+    std::cout << "5.6 Mol/L" << std::endl; //необходимо дописать (данная строка для теста)
+  }
   }
 };
 
@@ -40,14 +83,14 @@ public:
 #define TEMPERATURE
 
 #include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
 
-//template
 class Temperature : public ICalculate //for Frequency converter Temperature?
 {
 public:
   void Calculate() const override
   {
-    std::cout<<"35.7"<<std::endl;
+    std::cout << "35.6 �" << std::endl;//необходимо дописать (данная строка для теста)
   }
 };
 

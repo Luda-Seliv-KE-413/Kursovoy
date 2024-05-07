@@ -12,28 +12,13 @@ class Frequency
 
      + {abstract} CalculateFrequency ()
 }
-interface ITimer
-{
-    Обеспечивает считывание
-    информации полученной
-    таймером
-}
-class Timer2
-{
-    Считает кол-во импульсов
-    пришедших на него за период 
-    установленный RTC
 
-    + {abstract} count ()
-}
 class Temperature
 {
     Преобразует частоту
     в температуру
 }
 
-ITimer -up-o Frequency
-Timer2 -up-|> ITimer
 Frequency -up-|> IMeasureFrequency
 IMeasureFrequency -up-o Temperature
 

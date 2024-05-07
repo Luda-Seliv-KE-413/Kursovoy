@@ -1,0 +1,54 @@
+@startuml Transmitor
+
+class BluetoothTask
+{
+Реализует передачу
+информации
+
++ void Execute ()
+}
+
+class Transmitor
+{
+Отправляет запрошенную
+информацию
+
++ {abstract} DataTransmitor ()
+}
+
+interface IBluetooth
+{
+Обеспчечивает передачу
+информации по беспроводному
+интерфейсу
+
++ {abstract} DataTransmitor () = 0
+}
+
+
+BluetoothTask o-- IBluetooth
+Transmitor -up-|> IBluetooth
+
+
+class USART2
+{
+    Преобразует нформацию
+    для передачи данных
+    
+    + void DataLineUsart ()
+}
+
+interface IUSART
+{
+    Обеспечивает преобразование 
+    нформации для передачи 
+    данных
+
+    + void DataLineUsart ()=0
+}
+
+
+IUSART -up-o Transmitor
+USART2 -up-|> IUSART
+
+@enduml

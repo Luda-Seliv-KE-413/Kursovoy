@@ -4,6 +4,30 @@
 :figure-caption: Рисунок
 :table-caption: Таблица
 :stem: Формула
+:sourcedir: CODE
 
 
 === Код программы для измерения частоты
+Для решения задачи измерения частоты был создан класс Frequency код которого представлен ниже.
+
+класс Frequency.h
+[.source, cpp]
+----
+#ifndef FREQUENCY
+#define FREQUENCY
+
+#include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
+
+//template
+class Frequency : public ICalculate //for Temperature converter Glycemia?
+{
+public:
+  void Calculate() const override
+  {
+    std::cout << "55 Hz" << std::endl; //íåîáõîäèìî äîïèñàòü (äàííàÿ ñòðîêà äëÿ òåñòà)
+  }
+};
+
+#endif
+----

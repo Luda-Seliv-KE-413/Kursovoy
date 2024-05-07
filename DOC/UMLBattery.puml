@@ -1,0 +1,34 @@
+@startuml DataProvider
+
+
+class BatteryVoltage
+{
+Преобразует код АЦП
+в значение заряда
+батареи
+
++ void Calculate ()
++ void Provid ()
+}
+
+class Information
+{
+Преобразует информацию
+в строку
+
++ {abstract} DataLine ()
+}
+
+interface IDataProvider
+{
+    Обеспечивает передачу 
+    информации для дальнейшего 
+    преобразования
+
+    + void Provid () = 0
+}
+
+BatteryVoltage -up-|> IDataProvider
+Information o--IDataProvider
+
+@enduml
