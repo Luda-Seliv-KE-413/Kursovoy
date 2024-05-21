@@ -8,9 +8,9 @@
 
 
 === Код программы для измерения частоты
-Для решения задачи измерения частоты был создан класс Frequency код которого представлен ниже.
+Для решения задачи измерения частоты был создан класс Frequency коды которого представлены ниже.
 
-класс Frequency.h
+файл класса Frequency.h
 [.source, cpp]
 ----
 #ifndef FREQUENCY
@@ -21,13 +21,30 @@
 
 //template
 class Frequency : public ICalculate //for Temperature converter Glycemia?
-{
+{ 
 public:
-  void Calculate() const override
-  {
-    std::cout << "55 Hz" << std::endl; //íåîáõîäèìî äîïèñàòü (äàííàÿ ñòðîêà äëÿ òåñòà)
-  }
+  float Calculate() const override;
+private:
+  float z;
 };
 
 #endif
+----
+
+файл класса Frequency.cpp
+[.source, cpp]
+----
+#include "Frequency.h"
+#include <iostream> // for std::cout
+
+float Glycemia::Calculate()
+{
+    std::cout << "Введите разность частот: " << std::endl;
+    std::cin >> z; //считывание введенных значений
+    if ((z>4.0f)||(z<-4.0f)) //диапазоне от 32.000 до 36.000 кГц
+    {
+      std::cout << "Разность частот не соответствует заданному диапазону" << std::endl;
+      z=0;
+    }
+};
 ----
