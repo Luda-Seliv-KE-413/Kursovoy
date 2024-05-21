@@ -6,8 +6,8 @@ class Glycemia
 значения температуры в
 значения гликемии
 
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class Temperature
@@ -15,8 +15,8 @@ class Temperature
 Преобразует частоту
 в температуру
 
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class Frequency
@@ -24,18 +24,8 @@ class Frequency
 Получает информацию
 о значениях частоты
 
-+ void Calculate ()
-+ void Provid ()
-}
-
-class BatteryVoltage
-{
-Преобразует код АЦП
-в значение заряда
-батареи
-
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class Information
@@ -52,10 +42,9 @@ interface IDataProvider
     информации для дальнейшего 
     преобразования
 
-    + void Provid () = 0
+    + float Provide () = 0
 }
 
-BatteryVoltage -up-|> IDataProvider
 Frequency -up-|> IDataProvider
 Temperature -up-|> IDataProvider
 Glycemia -up-|> IDataProvider

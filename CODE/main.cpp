@@ -39,21 +39,20 @@ int __low_level_init(void)
   
   return 1;
 }
-}
+}*/
 
-Temperature temp;
-Glycemia glyc;
 Frequency freq;
+Temperature temp (freq);
+Glycemia glyc (temp);
 
-
-MeasureGlycemiaTask measureGlycemiaTask(glyc, temp, freq);*/
+MeasureGlycemiaTask measureGlycemiaTask(glyc, temp, freq);
 //BluetoothTask bluetoothTask();
 
 
 int main()
 {  
   using namespace OsWrapper;
-  //Rtos::CreateThread(measureGlycemiaTask, "measureGlycemiaTask");
+  Rtos::CreateThread(measureGlycemiaTask, "measureGlycemiaTask");
   //Rtos::CreateThread(bluetoothTask, "bluetoothTask");
   Rtos::Start();
   

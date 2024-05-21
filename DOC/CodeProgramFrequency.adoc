@@ -18,12 +18,14 @@
 
 #include "ICalculate.h" //for Calculate
 #include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
 
 //template
-class Frequency : public ICalculate //for Temperature converter Glycemia?
+class Frequency : public ICalculate, public IDataProvider
 { 
 public:
-  float Calculate() const override;
+  float Provide() override;
+  float Calculate() override;
 private:
   float z;
 };
@@ -37,14 +39,13 @@ private:
 #include "Frequency.h"
 #include <iostream> // for std::cout
 
-float Glycemia::Calculate()
+float Frequency::Calculate()
 {
-    std::cout << "Введите разность частот: " << std::endl;
-    std::cin >> z; //считывание введенных значений
-    if ((z>4.0f)||(z<-4.0f)) //диапазоне от 32.000 до 36.000 кГц
-    {
-      std::cout << "Разность частот не соответствует заданному диапазону" << std::endl;
-      z=0;
-    }
+      z=1.0f; //TO DO (измерить частоту)
+};
+
+float Frequency::Provide()
+{
+    return z;
 };
 ----

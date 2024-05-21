@@ -6,13 +6,12 @@
 #include "Frequency.h"
 #include <iostream> // for std::cout
 
-float Glycemia::Calculate()
+float Frequency::Calculate()
 {
-    std::cout << "¬ведите разность частот: " << std::endl;
-    std::cin >> z; //считывание введенных значений
-    if ((z>4.0f)||(z<-4.0f)) //диапазоне от 32.000 до 36.000 к√ц
-    {
-      std::cout << "–азность частот не соответствует заданному диапазону" << std::endl;
-      z=0;
-    }
+      z=1.0f; //TO DO (измерить частоту)
+};
+
+float Frequency::Provide()
+{
+    return z;
 };

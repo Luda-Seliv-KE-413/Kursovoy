@@ -3,15 +3,18 @@
 
 #include "ICalculate.h" //for Calculate
 #include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
 
 //template
-class Glycemia : public ICalculate //for Temperature converter Glycemia?
+class Glycemia : public ICalculate, public IDataProvider
 {
 public:
-  float Calculate() const override;
+  Glycemia(IDataProvider& temperature): mTemperature(temperature){}
+  float Provide() override;
+  float Calculate() override;
 private:
   //константы дл€ формул
-  const float XT_0 = 37.0f; //(темература T0 из Temperature.c) 
+  const float XT_0 = 37.0f;
   const float XP_0 = 700.0f; //справочна€ информаци€ (примерное значение)
   const float al = 0.48f;
   
@@ -25,7 +28,8 @@ private:
   
   //¬ычисление необходимых значений дл€ упрощени€ кубического уровнени€
   float XT;//¬з€ть значение XT, как значение T из Temperature.cpp
-  float XP, s, dXT, dXP, XT_j, XP_j; 
+  float XP, s, dXT, dXP, XT_j, XP_j, WTP, Xg; 
+  IDataProvider& mTemperature;
 };
 
 #endif

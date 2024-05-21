@@ -38,14 +38,19 @@ XP=M_2PI*al*dXT
 
 float Glycemia::Calculate()
 {
-    dXT=XT-XT_0;
-    dXP=XP-XP_0;
-    XP=M_2PI*al*dXT; 
-    XT_j=dXT/XT_0;// XT'
-    XP_j=dXP/XP_0;// XP'        
-    s=dtau/dt; 
-    WTP=exp(-s);
-    Xg=((KTP*WTP*XT_j)+(KP*WTP*XP_j))*Xg0+Xg0;
-        
-    return Xg;
+  const float XT=mTemperature.Provide();
+  dXT=XT-XT_0;
+  dXP=XP-XP_0;
+  XP=M_2PI*al*dXT; 
+  XT_j=dXT/XT_0;// XT'
+  XP_j=dXP/XP_0;// XP'        
+  s=dtau/dt; 
+  WTP=exp(-s);
+  Xg=((KTP*WTP*XT_j)+(KP*WTP*XP_j))*Xg0+Xg0;
+  std::cout<<Xg<<std::endl;
+};
+
+float Glycemia::Provide()
+{
+  return Xg;//для передачи информации по Bluetooth
 };

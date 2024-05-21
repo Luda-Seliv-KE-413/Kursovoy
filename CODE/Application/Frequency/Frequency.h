@@ -3,12 +3,14 @@
 
 #include "ICalculate.h" //for Calculate
 #include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
 
 //template
-class Frequency : public ICalculate //for Temperature converter Glycemia?
+class Frequency : public ICalculate, public IDataProvider
 { 
 public:
-  float Calculate() const override;
+  float Provide() override;
+  float Calculate() override;
 private:
   float z;
 };
