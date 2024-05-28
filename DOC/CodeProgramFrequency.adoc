@@ -41,7 +41,7 @@ private:
 
 float Frequency::Calculate()
 {
-      z=1.0f; //TO DO (измерить частоту)
+      z=1.0f; //TO DO 
 };
 
 float Frequency::Provide()

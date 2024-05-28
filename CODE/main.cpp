@@ -1,18 +1,18 @@
 #include "rtos.hpp"         // for Rtos
 #include "rccregisters.hpp" // for RCC
-//#include "usart2registers.hpp" // for USART2
-//#include "gpioaregisters.hpp" // for GPIOA
+#include "usart2registers.hpp" // for USART2
+#include "gpioaregisters.hpp" // for GPIOA
 
 #include "MeasureGlycemiaTask.h" // for MeasureGlycemiaTask
 #include "Temperature.h" // for Temperature
 #include "Glycemia.h" // for Glycemia
 #include "Frequency.h" // for Frequency
-//#include "BluetoothTask.h" // for BluetoothTask
-
+#include "BluetoothTask.h" // for BluetoothTask
+#include "InfoUsart.h" // for InfoUsart
 
 std::uint32_t SystemCoreClock = 16'000'000U;
 
-/*extern "C" {
+extern "C" {
 int __low_level_init(void)
 {
   //Usart
@@ -39,21 +39,22 @@ int __low_level_init(void)
   
   return 1;
 }
-}*/
+}
 
 Frequency freq;
 Temperature temp (freq);
 Glycemia glyc (temp);
+InfoUsart usart(glyc);
 
 MeasureGlycemiaTask measureGlycemiaTask(glyc, temp, freq);
-//BluetoothTask bluetoothTask();
+BluetoothTask bluetoothTask(usart);
 
 
 int main()
 {  
   using namespace OsWrapper;
   Rtos::CreateThread(measureGlycemiaTask, "measureGlycemiaTask");
-  //Rtos::CreateThread(bluetoothTask, "bluetoothTask");
+  Rtos::CreateThread(bluetoothTask, "bluetoothTask");
   Rtos::Start();
   
   return 0;

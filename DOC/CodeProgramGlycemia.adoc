@@ -26,7 +26,7 @@ class MeasureGlycemiaTask : public OsWrapper::Thread<256>
 public:
   
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
-    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //Агрегация
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //���������
   {
   }
   virtual void Execute() override;
@@ -79,21 +79,21 @@ public:
   float Provide() override;
   float Calculate() override;
 private:
-  //константы для формул
+  //��������� ��� ������
   const float XT_0 = 37.0f;
-  const float XP_0 = 700.0f; //справочная информация (примерное значение)
+  const float XP_0 = 700.0f; //���������� ���������� (��������� ��������)
   const float al = 0.48f;
   
   const float dt = 300000.0f;
   const float dtau = 600000.0f;
 
-  //Произвольные данные (необходимо также рассчитыать для каждого индиыидуально
+  //������������ ������ (���������� ����� ����������� ��� ������� �������������
   const float Xg0 = 6.0f;
   const float KTP = 2.5f;
   const float KP = 1.4f;
   
-  //Вычисление необходимых значений для упрощения кубического уровнения
-  float XT;//Взять значение XT, как значение T из Temperature.cpp
+  //���������� ����������� �������� ��� ��������� ����������� ���������
+  float XT;//����� �������� XT, ��� �������� T �� Temperature.cpp
   float XP, s, dXT, dXP, XT_j, XP_j, WTP, Xg; 
   IDataProvider& mTemperature;
 };
@@ -105,7 +105,7 @@ private:
 [.source, cpp]
 ----
 #include "Glycemia.h"
-#include <math.h> // для sqrt(), fabs(), pow(), cos(), acos().
+#include <math.h> // ��� sqrt(), fabs(), pow(), cos(), acos().
 #include <iostream> // for std::cout
 #define M_PI (3.141592653589793)
 #define M_2PI (2.*M_PI)
@@ -126,7 +126,7 @@ float Glycemia::Calculate()
 
 float Glycemia::Provide()
 {
-  return Xg;//для передачи информации по Bluetooth
+  return Xg;//��� �������� ���������� �� Bluetooth
 };
 ----
 
@@ -147,7 +147,7 @@ public:
   float Provide() override;
   float Calculate() override;
 private:
-  //константы для формул
+  //��������� ��� ������
   const float B1=-62.0f;
   const float B2=-0.12f;
   const float B3=0.013f;
@@ -164,7 +164,7 @@ private:
 [.source, cpp]
 ----
 #include "Temperature.h"
-#include <math.h> // для sqrt(), fabs(), pow(), cos(), acos().
+#include <math.h> // ��� sqrt(), fabs(), pow(), cos(), acos().
 #include <iostream> // for std::cout
 #define M_PI (3.141592653589793)
 #define M_2PI (2.*M_PI)

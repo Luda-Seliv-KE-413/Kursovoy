@@ -28,12 +28,13 @@ class Frequency
 + float Provide ()
 }
 
-class Information
+class InfoUsart
 {
 Преобразует информацию
-в строку
+в строку и организовывает
+ее порядок передачи
 
-+ {abstract} DataLine ()
++ void DataTransmitor ()
 }
 
 interface IDataProvider
@@ -51,6 +52,6 @@ Glycemia -up-|> IDataProvider
 
 Glycemia o-- IDataProvider
 Temperature o-- IDataProvider
-Information o--IDataProvider
+InfoUsart o--IDataProvider
 
 @enduml
