@@ -1,0 +1,92 @@
+@startuml main
+
+interface IThread
+{
+(общий поток информации)
+
++ void Execute () = 0
+}
+
+class MeasureGlycemiaTask
+{
+Реализует измерение
+гликемии
+
++ void Execute ()
+}
+
+class Glycemia
+{
+Преобразует полученные
+значения температуры в
+значения гликемии
+
++ float Calculate ()
++ float Provide ()
+}
+
+class Temperature
+{
+Преобразует частоту
+в температуру
+
++ float Calculate ()
++ float Provide ()
+}
+
+class Frequency
+{
+Получает информацию
+о значениях частоты
+
++ float Calculate ()
++ float Provide ()
+}
+
+class BluetoothTask
+{
+Реализует передачу
+информации
+
++ void Execute ()
+}
+
+interface ICalculate
+{
+Обеспечивает перерасчет
+значений
+
++ float Calculate () = 0
+}
+
+class InfoUsart
+{
+Преобразует информацию
+в строку и организовывает
+ее порядок передачи
+
++ void DataTransmitor ()
+}
+
+interface IBluetooth
+{
+Обеспечивает передачу
+полученой информации
+
++ void DataTransmitor () = 0
+}
+
+BluetoothTask -up-|> IThread
+MeasureGlycemiaTask -up-|> IThread
+
+BluetoothTask o-- IBluetooth
+InfoUsart -up-|> IBluetooth
+
+MeasureGlycemiaTask "3" o-down- ICalculate
+Glycemia -up-|> ICalculate
+Temperature -up-|> ICalculate
+Frequency -up-|> ICalculate
+
+
+
+@enduml

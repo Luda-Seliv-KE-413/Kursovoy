@@ -1,0 +1,57 @@
+@startuml DataProvider
+
+class Glycemia
+{
+Преобразует полученные
+значения температуры в
+значения гликемии
+
++ float Calculate ()
++ float Provide ()
+}
+
+class Temperature
+{
+Преобразует частоту
+в температуру
+
++ float Calculate ()
++ float Provide ()
+}
+
+class Frequency
+{
+Получает информацию
+о значениях частоты
+
++ float Calculate ()
++ float Provide ()
+}
+
+class InfoUsart
+{
+Преобразует информацию
+в строку и организовывает
+ее порядок передачи
+
++ void DataTransmitor ()
+}
+
+interface IDataProvider
+{
+    Обеспечивает передачу 
+    информации для дальнейшего 
+    преобразования
+
+    + float Provide () = 0
+}
+
+Frequency -up-|> IDataProvider
+Temperature -up-|> IDataProvider
+Glycemia -up-|> IDataProvider
+
+Glycemia o-- IDataProvider
+Temperature o-- IDataProvider
+InfoUsart o--IDataProvider
+
+@enduml
