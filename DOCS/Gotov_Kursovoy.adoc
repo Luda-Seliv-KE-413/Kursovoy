@@ -22,8 +22,6 @@ include::CodeProgramFrequency.adoc[]
 
 include::CodeProgramGlycemia.adoc[]
 
-include::CodeProgramBattery.adoc[]
-
 include::CodeProgramBluetooth.adoc[]
 
 include::Rezultat.adoc[]
