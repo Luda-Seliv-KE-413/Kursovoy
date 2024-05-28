@@ -6,6 +6,7 @@ interface IThread
 
 + void Execute () = 0
 }
+
 class MeasureGlycemiaTask
 {
 Реализует измерение
@@ -13,14 +14,15 @@ class MeasureGlycemiaTask
 
 + void Execute ()
 }
+
 class Glycemia
 {
 Преобразует полученные
 значения температуры в
 значения гликемии
 
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class Temperature
@@ -28,8 +30,8 @@ class Temperature
 Преобразует частоту
 в температуру
 
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class Frequency
@@ -37,28 +39,8 @@ class Frequency
 Получает информацию
 о значениях частоты
 
-+ void Calculate ()
-+ void Provid ()
-}
-
-class BatteryTask
-{
-Реализует передачу
-информации о
-состоянии заряда
-батареи
-
-+ void Execute ()
-}
-
-class BatteryVoltage
-{
-Преобразует код АЦП
-в значение заряда
-батареи
-
-+ void Calculate ()
-+ void Provid ()
++ float Calculate ()
++ float Provide ()
 }
 
 class BluetoothTask
@@ -69,62 +51,42 @@ class BluetoothTask
 + void Execute ()
 }
 
-class Transmitor
-{
-Отправляет запрошенную
-информацию
-
-+ {abstract} DataTransmitor ()
-}
 interface ICalculate
 {
 Обеспечивает перерасчет
 значений
 
-+ void Calculate () = 0
++ float Calculate () = 0
 }
 
-class Information
+class InfoUsart
 {
 Преобразует информацию
-в строку
+в строку и организовывает
+ее порядок передачи
 
-+ void DataLine ()
++ void DataTransmitor ()
 }
+
 interface IBluetooth
 {
-Обеспчечивает передачу
-информации по беспроводному
-интерфейсу
+Обеспечивает передачу
+полученой информации
 
-+ {abstract} DataTransmitor () = 0
-}
-
-interface IConverter
-{
-Конвертирует информацию
-и передает для передачи
-по Bluetooth
-
-+ void DataLine () = 0
++ void DataTransmitor () = 0
 }
 
 BluetoothTask -up-|> IThread
 MeasureGlycemiaTask -up-|> IThread
-BatteryTask -up-|> IThread
 
 BluetoothTask o-- IBluetooth
-BluetoothTask o-- IConverter
-Transmitor -up-|> IBluetooth
-
-BatteryTask o-down- ICalculate
+InfoUsart -up-|> IBluetooth
 
 MeasureGlycemiaTask "3" o-down- ICalculate
 Glycemia -up-|> ICalculate
 Temperature -up-|> ICalculate
 Frequency -up-|> ICalculate
-BatteryVoltage -up-|> ICalculate
 
-Information -up-|> IConverter
+
 
 @enduml

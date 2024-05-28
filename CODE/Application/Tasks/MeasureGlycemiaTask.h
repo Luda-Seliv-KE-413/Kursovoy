@@ -12,18 +12,8 @@ public:
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
     mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //Агрегация
   {
-    
   }
-  void Execute() override
-    {
-      for(;;) //Цикл расчета значений
-      {
-        mFrequency.Calculate();
-        mTemperature.Calculate();
-        mGlycemia.Calculate();
-        Sleep(30000ms); //Спящий режим 5 минут
-      }
-    }
+  virtual void Execute() override;
   
 private:
   ICalculate& mGlycemia;

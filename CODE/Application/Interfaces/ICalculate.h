@@ -4,7 +4,7 @@
 class ICalculate
 {
 public:
-  virtual void Calculate() const=0;
+  virtual float Calculate() =0;
 };
 
 #endif

@@ -9,36 +9,27 @@
 
 === Код программы для измерения гликемии (уровня глюкозы в крови)
 
-Для решения задачи измерения гликемии был создан класс задачи MeasureGlycemiaTask код которого представлен ниже.
+Для решения задачи измерения гликемии был создан класс задачи MeasureGlycemiaTask коды которого представлены ниже.
 
-класс MeasureGlycemiaTask.h
+файл MeasureGlycemiaTask.h
 [.source, cpp]
 ----
 #ifndef MEASUREGLYCEMIATASK
 #define MEASUREGLYCEMIATASK
 #include "thread.hpp" // for OsWrapper::Thread<>
+#include "ICalculate.h" //for Calculate
 
 #include <iostream> // for std::cout
 
-class MeasureGlycemiaTask : public IThread
+class MeasureGlycemiaTask : public OsWrapper::Thread<256>
 {
 public:
   
   MeasureGlycemiaTask (ICalculate& glycemia, ICalculate& temperature, ICalculate& frequency) : 
-    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) 
+    mGlycemia(glycemia), mTemperature(temperature), mFrequency(frequency) //���������
   {
-    
   }
-  void Execute() override
-    {
-      for(;;) 
-      {
-        mFrequency.Calculate();
-        mTemperature.Calculate();
-        mGlycemia.Calculate();
-        Sleep(30000ms); 
-      }
-    }
+  virtual void Execute() override;
   
 private:
   ICalculate& mGlycemia;
@@ -49,11 +40,28 @@ private:
 #endif
 ----
 
+файл MeasureGlycemiaTask.cpp
+[.source, cpp]
+----
+#include "MeasureGlycemiaTask.h"
+
+void MeasureGlycemiaTask :: Execute()
+{
+  for(;;)
+  {
+    mFrequency.Calculate();
+    mTemperature.Calculate();
+    mGlycemia.Calculate();
+    Sleep(1000ms);
+  }
+}
+----
+
 Для измерения гликемии необходимо получить информацию о частоте кварцевого резонатора, преобразовать частоту в температуру, а температуру уже в значения гликемии.
 
-Коды для получения значений гликемии (класс Glycemia.h)  из температуры (класс Temperature.h) представлены ниже:
+Коды для получения значений гликемии (класс Glycemia)  из температуры (класс Temperature) представлены ниже:
 
-класс Glycemia.h
+файл Glycemia.h
 [.source, cpp]
 ----
 #ifndef GLYCEMIA
@@ -61,22 +69,68 @@ private:
 
 #include "ICalculate.h" //for Calculate
 #include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
 
 //template
-class Glycemia : public ICalculate //for Temperature converter Glycemia?
+class Glycemia : public ICalculate, public IDataProvider
 {
 public:
-  void Calculate() const override
-  {
-    std::cout << "5.6 Mol/L" << std::endl; //необходимо дописать (данная строка для теста)
-  }
-  }
+  Glycemia(IDataProvider& temperature): mTemperature(temperature){}
+  float Provide() override;
+  float Calculate() override;
+private:
+  //��������� ��� ������
+  const float XT_0 = 37.0f;
+  const float XP_0 = 700.0f; //���������� ���������� (��������� ��������)
+  const float al = 0.48f;
+  
+  const float dt = 300000.0f;
+  const float dtau = 600000.0f;
+
+  //������������ ������ (���������� ����� ����������� ��� ������� �������������
+  const float Xg0 = 6.0f;
+  const float KTP = 2.5f;
+  const float KP = 1.4f;
+  
+  //���������� ����������� �������� ��� ��������� ����������� ���������
+  float XT;//����� �������� XT, ��� �������� T �� Temperature.cpp
+  float XP, s, dXT, dXP, XT_j, XP_j, WTP, Xg; 
+  IDataProvider& mTemperature;
 };
 
 #endif
 ----
 
-класс Temperature.h
+файл Glycemia.cpp
+[.source, cpp]
+----
+#include "Glycemia.h"
+#include <math.h> // ��� sqrt(), fabs(), pow(), cos(), acos().
+#include <iostream> // for std::cout
+#define M_PI (3.141592653589793)
+#define M_2PI (2.*M_PI)
+
+float Glycemia::Calculate()
+{
+  const float XT=mTemperature.Provide();
+  dXT=XT-XT_0;
+  dXP=XP-XP_0;
+  XP=M_2PI*al*dXT; 
+  XT_j=dXT/XT_0;// XT'
+  XP_j=dXP/XP_0;// XP'        
+  s=dtau/dt; 
+  WTP=exp(-s);
+  Xg=((KTP*WTP*XT_j)+(KP*WTP*XP_j))*Xg0+Xg0;
+  std::cout<<Xg<<std::endl;
+};
+
+float Glycemia::Provide()
+{
+  return Xg;//��� �������� ���������� �� Bluetooth
+};
+----
+
+файл Temperature.h
 [.source, cpp]
 ----
 #ifndef TEMPERATURE
@@ -84,17 +138,50 @@ public:
 
 #include "ICalculate.h" //for Calculate
 #include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
 
-class Temperature : public ICalculate //for Frequency converter Temperature?
+class Temperature : public ICalculate, public IDataProvider
 {
 public:
-  void Calculate() const override
-  {
-    std::cout << "35.6 �" << std::endl;//необходимо дописать (данная строка для теста)
-  }
+  Temperature(IDataProvider& frequency): mFrequency(frequency){}
+  float Provide() override;
+  float Calculate() override;
+private:
+  //��������� ��� ������
+  const float B1=-62.0f;
+  const float B2=-0.12f;
+  const float B3=0.013f;
+  const float T0=37.0f;
+
+  float T;
+  IDataProvider& mFrequency;
 };
 
 #endif
+----
+
+файл Temperature.cpp
+[.source, cpp]
+----
+#include "Temperature.h"
+#include <math.h> // ��� sqrt(), fabs(), pow(), cos(), acos().
+#include <iostream> // for std::cout
+#define M_PI (3.141592653589793)
+#define M_2PI (2.*M_PI)
+ 
+float Temperature::Calculate() 
+{
+  const float z=mFrequency.Provide();
+  const float z2=z*z;
+  const float z3=pow(z, 3);
+  T=-(T0+B1*z+B2*z2+B3*z3);
+  std::cout<<T<<std::endl;
+};
+
+float Temperature::Provide()
+{
+  return T;
+};
 ----
 
 Для преобразования (пересчета) значений температуры в значения гликемии используется интерфейс, код которого представлен ниже:
@@ -108,8 +195,14 @@ public:
 class ICalculate
 {
 public:
-  virtual void Calculate() const=0;
+  virtual float Calculate() =0;
 };
 
 #endif
 ----
+
+Результат проверки работоспособности кодов представлен на рисунке.
+
+[#Проверка работоспособности кодов]
+.Проверка работоспособности кодов
+image::Result_Cod.png[]
