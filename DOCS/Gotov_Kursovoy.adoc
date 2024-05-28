@@ -1,0 +1,29 @@
+:toc: macro
+:icons: font
+:toc-title: Оглавление
+
+include::Titul.adoc[]
+
+toc::[]
+
+include::Zadanie na rabotu.adoc[]
+
+include::Vvedenie.adoc[]
+
+include::Analiz_Trebovaniy.adoc[]
+
+include::Design.adoc[]
+
+== Коды интерфейса
+
+По архитектуре представленной в предыдущем разделе были написаны коды программнго обеспечения устройства.
+
+include::CodeProgramFrequency.adoc[]
+
+include::CodeProgramGlycemia.adoc[]
+
+include::CodeProgramBattery.adoc[]
+
+include::CodeProgramBluetooth.adoc[]
+
+include::Rezultat.adoc[]

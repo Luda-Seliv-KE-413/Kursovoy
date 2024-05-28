@@ -1,0 +1,51 @@
+:imagesdir: images
+:toc: macro
+:icons: font
+:figure-caption: Рисунок
+:table-caption: Таблица
+:stem: Формула
+:sourcedir: CODE
+
+
+=== Код программы для измерения частоты
+Для решения задачи измерения частоты был создан класс Frequency коды которого представлены ниже.
+
+файл класса Frequency.h
+[.source, cpp]
+----
+#ifndef FREQUENCY
+#define FREQUENCY
+
+#include "ICalculate.h" //for Calculate
+#include <iostream> // for std::cout
+#include "IDataProvider.h" //for Provide
+
+//template
+class Frequency : public ICalculate, public IDataProvider
+{ 
+public:
+  float Provide() override;
+  float Calculate() override;
+private:
+  float z;
+};
+
+#endif
+----
+
+файл класса Frequency.cpp
+[.source, cpp]
+----
+#include "Frequency.h"
+#include <iostream> // for std::cout
+
+float Frequency::Calculate()
+{
+      z=1.0f; //TO DO 
+};
+
+float Frequency::Provide()
+{
+    return z;
+};
+----
